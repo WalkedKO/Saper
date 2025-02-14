@@ -11,20 +11,20 @@ class Block
 		/// If the block is clicked
 		/// </summary>
 		bool isClicked;
-		Block(int x, int y, int z, int w, bool bomb, int neighbours) :
+		Block(int x, int y, int z, int w) :
 			x(x), y(y), z(z), w(w),
-			isBomb(bomb),
 			isFlagged(false),
-			isClicked(false),
-			neighboursWithBomb(neighbours) {}
+			isClicked(false){}
 		/// <summary>
 		/// If false, there is no bomb, if true, there is
 		/// </summary>
 		bool isClear();
 		void flag();
+		friend class SaperMap;
 	private:
 		bool isFlagged;
 		bool isBomb;
+		
 		
 };
 
