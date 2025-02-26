@@ -1,11 +1,12 @@
 #include "SaperMap.h"
 #include <vector>
 #include <cstdlib>
+#include <iostream>
+#include <array>
 SaperMap::SaperMap(int size, int bombs) : size(size), bombs(bombs), state(0)
 {
 	saperMap = createSaperMap();
 	bombsVec = bombsLocation();
-	for (int* block : bombsVec) saperMap[block[0]][block[1]][block[2]][block[3]]->isBomb = true;
 	for (int w = 0; w < size; w++)
 	{
 		for (int z = 0; z < size; z++)
@@ -14,7 +15,7 @@ SaperMap::SaperMap(int size, int bombs) : size(size), bombs(bombs), state(0)
 			{
 				for (int x = 0; x < size; x++) {
 					Block* tempBlock = saperMap[w][z][y][x];
-					if(!tempBlock->ifBomb()) tempBlock->neighboursWithBomb = countNeighbours(x, y, z, w);
+					if(!(tempBlock->ifBomb())) tempBlock->neighboursWithBomb = countNeighbours(x, y, z, w);
 				}
 			}
 		}
@@ -99,29 +100,43 @@ Block***** SaperMap::createSaperMap() {
 	}
 	return tempSaperMap;
 }
-std::vector<int*> SaperMap::bombsLocation() {
-	std::vector<int*> bombsLoc;
+std::vector<std::array<int,4>> SaperMap::bombsLocation() {
+	std::vector<std::array<int,4>> bombsLoc;
 	int similarity;
+	bool canBe = true;
 	for (int i = 0; i < bombs; i++) 
 	{
-		int* tempArr;
-		tempArr = new int[4];
+		canBe = true;
+		std::array<int, 4> tempArr;
 		for (int j = 0; j < 4; j++) tempArr[j] = rand() % size;
-		for (int* element : bombsLoc)
+		if (i == 0) {
+			bombsLoc.push_back(tempArr);
+			continue;
+		}
+		for (auto element : bombsLoc)
 		{
 			similarity = 0;
-			int j = 0;
-			for (j = 0; j < 4; j++)
+			for (int j = 0; j < 4; j++)
 			{
 				if (tempArr[j] == element[j]) similarity++;
 			}
-			if (similarity != 4) bombsLoc.push_back(tempArr);
-			else 
-			{
+			if (similarity == 4) {
+				canBe = false;
 				i--;
 				break;
 			}
 		}
+		if (canBe) {
+			saperMap[tempArr[0]][tempArr[1]][tempArr[2]][tempArr[3]]->isBomb = true;
+			bombsLoc.emplace_back(tempArr);
+		}
 	}
 	return bombsLoc;
+}
+
+
+void SaperMap::AltPrint() {
+	for (auto element : bombsVec) {
+		std::cout << element[0] << " " << element[1] << " " << element[2] << " " << element[3] << std::endl;
+	}
 }

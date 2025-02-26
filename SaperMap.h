@@ -13,18 +13,22 @@ public:
 	int getClickedBlocks();
 	int getBombs();
 	Block*** getPanel(int z, int w);
-	
+	// for debug, to delete
+	void AltPrint();
+
+
 private:
 	int size;
 	int bombs;
 	Block***** saperMap;
 	std::vector<int*> clickedBlocksVec;
-	std::vector<int*> bombsVec;
+	std::vector<std::array<int, 4>> bombsVec;
 
 	void fill(int x, int y, int z, int w);
 	int countNeighbours(int centX, int centY, int centZ, int centW);
 	Block***** createSaperMap();
-	std::vector<int*> bombsLocation();
+	std::vector<std::array<int,4>> bombsLocation();
+	
 	
 		
 
