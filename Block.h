@@ -18,7 +18,8 @@ class Block
 		/// <summary>
 		/// If false, there is no bomb, if true, there is
 		/// </summary>
-		bool isClear();
+		bool ifBomb();
+		bool ifClicked();
 		void flag();
 		friend class SaperMap;
 	private:

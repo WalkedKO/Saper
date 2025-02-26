@@ -7,22 +7,25 @@ public:
 	int state;
 
 	SaperMap(int size, int bombs);
-	void click(int x, int y, int z, int w);
+	// true - no bomb, false - bomb
+	bool click(int centX, int centY, int centZ, int centW);
 	void flag(int x, int y, int z, int w);
 	int getClickedBlocks();
 	int getBombs();
-	Block** getPanel(int z, int w);
+	Block*** getPanel(int z, int w);
 	
 private:
 	int size;
 	int bombs;
-	int clickedBlocks;
 	Block***** saperMap;
+	std::vector<int*> clickedBlocksVec;
+	std::vector<int*> bombsVec;
 
 	void fill(int x, int y, int z, int w);
 	int countNeighbours(int centX, int centY, int centZ, int centW);
 	Block***** createSaperMap();
 	std::vector<int*> bombsLocation();
+	
 		
 
 

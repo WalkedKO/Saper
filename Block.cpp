@@ -1,7 +1,11 @@
 #include "Block.h"
-bool Block::isClear()
+bool Block::ifBomb()
 {
 	return isBomb;
+}
+bool Block::ifClicked()
+{
+	return isClicked;
 }
 void Block::flag() 
 {
