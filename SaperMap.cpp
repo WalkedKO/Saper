@@ -26,7 +26,7 @@ bool SaperMap::click(int x, int y, int z, int w)
 {
 	// if clicked or not yet, doesnt make a difference in logic
 	Block* blockRef = saperMap[w][z][y][x];
-	int tempArr[4] = {x, y, z, w};
+	int tempArr[4] = {w,z,y,x};
 	if (!blockRef->isClicked) clickedBlocksVec.push_back(tempArr);
 	if (blockRef->isBomb) return false;
 	return true; 

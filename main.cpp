@@ -2,24 +2,37 @@
 #include "SaperMap.h"
 
 using namespace std;
-void PrintPlain(Block*** plain, int size) {
-	string temp;
-	//int counter = 0;
-	for (int y = 0; y < size; y++) {
-		temp = "| ";
-		for (int x = 0; x < size; x++) {
-			temp = temp + plain[y][x]->toString() + " ";
-			//if (plain[y][x]->ifBomb()) counter++;
-		}
-		temp += "|";
-		cout << temp << endl;
+class Tester
+{
+	Block*** currentPlain;
+	int size, bombs;
+	int curW, curZ;
+	SaperMap* saperMap;
+	Tester(int size, int bombs) : curZ(0), curW(0), size(size), bombs(bombs)
+	{
+		saperMap = new SaperMap(size, bombs);
+		currentPlain = saperMap->getPanel(curZ, curW);
 	}
-	//return counter;
-}
+	void PrintPlain() {
+		string temp;
+		for (int y = 0; y < size; y++) {
+			temp = "| ";
+			for (int x = 0; x < size; x++) {
+				temp = temp + currentPlain[y][x]->toString() + " ";
+			}
+			temp += "|";
+			cout << temp << endl;
+		}
+	}
+	void ChangePlain(int w, int z)
+	{
+		currentPlain = saperMap->getPanel(z, w);
+		PrintPlain();
+	}
+};
+
 
 int main()
 {
-	SaperMap* tester = new SaperMap(4,100);
-	Block*** block = tester->getPanel(1, 1);
-	PrintPlain(block, 4);
+	
 }
